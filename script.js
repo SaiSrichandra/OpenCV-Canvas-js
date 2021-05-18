@@ -40,13 +40,35 @@ const getStream = async () => {
   };
 };
 
+clearButton.onclick = (event) => {
+  event.preventDefault();
+  if(!isDrawing){
+    List = [[]];
+    cList = [[]];
+  }
+
+}
+
+undoButton.onclick = (event) => {
+  event.preventDefault();
+  if(!isDrawing){
+    List.pop();
+    List.pop();
+    List.push([]);
+    cList.pop();
+  }
+
+}
+
+
+
 const draw = () => {
   cv.flip(frame, frame, 1);
   let hsv = new cv.Mat();
   cv.cvtColor(frame, hsv, cv.COLOR_RGB2HSV);
   // console.log(hsv.type());
-  lower = new cv.Mat(hsv.rows, hsv.cols, hsv.type(), [44, 78, 74, 0]);
-  upper = new cv.Mat(hsv.rows, hsv.cols, hsv.type(), [84, 255, 183, 1]);
+  let lower = new cv.Mat(hsv.rows, hsv.cols, hsv.type(), [6, 220, 96, 0]);
+  let upper = new cv.Mat(hsv.rows, hsv.cols, hsv.type(), [20, 255, 255, 1]);
   // console.log("BEFORE::::::::::", hsv);
   cv.inRange(hsv, lower, upper, hsv);
   lower.delete();
